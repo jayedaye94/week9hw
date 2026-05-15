@@ -1,0 +1,64 @@
+## Runbook
+
+### Runbook goals
+- Goal of this runbook is to successfully configure an external load balancer correctly while using a MIG as a backend.
+
+### Prerequisites
+-  GCP account & correct project ID
+- Properly configured instance template
+- Properly configured MIG(s)
+    - Desired region & zones
+    - Properly configured MIG health check
+    - Autoscaling
+
+### Runbook steps - External load balancer
+- Creating load balancer steps
+    - Type load balancer in search bar and navigate to load balancer page
+    - Click create load balancer
+    - Select the following setting and click configure
+        - Application load balancer (HTTP/HTTPS)
+        - Public facing (external)
+        - Best for global workloads
+        - Global External Application Load Balancer
+- Name load balancer to something that can easily be navigated to
+- Frontend Configuration
+    - Name & description
+        - Protocol = HTTP
+        - IP version = IPv4
+        - IP address = Ephermeral (Auto)
+        - Port = 80
+- Backend Configuration
+    - Create Backend service #1
+        - Name & description
+        - Backend type = Instance group
+        - Protocol = HTTP
+        - Named Port = http
+        - Timeout = 30 seconds
+        - IP address Selection Policy = Only IPv4
+        - Health check = select ALB health check 
+    - New Backend #1
+        - IP Stack type = IPv4 (single stack)
+        - Instance Group = select correct regional mig. (For ex. week9hw-mig in screenshots fldr)
+        - Port number = 80
+        - Balancing mode = Rate
+            - Traffic duration = Default (short)
+            - Maximum RPS = 10
+            - Scope = per instance
+            - Backend Preference level = none
+        - New Backend #2
+            - Follow the same steps for all additional backends and choose correct regional mig
+        - Cloud CDN = unchecked
+        - Logging - unchecked
+        - Identity-Aware Proxy = unchecked
+        - Cloud Armor = None
+- Routing rules
+    - Mode = Simple host and Path Rule
+- Click Create
+### Teardown Order
+
+    1. Load Balancer with Backend
+    
+    2. MIG(s)
+
+    3. Instance Templates
+    
