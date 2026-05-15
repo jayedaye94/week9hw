@@ -54,3 +54,10 @@
 
 - What is TTL and how does it control content “freshness”? 
     - It stands for "Time to Live". It controls how long the contents stays cached. Then the CDN checks for updates.
+ 
+
+
+
+Sources: https://docs.cloud.google.com/load-balancing/docs/health-checks https://www.geeksforgeeks.org/system-design/reverse-proxy-vs-load-balancer/ https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/compute_url_map https://docs.cloud.google.com/load-balancing/docs/l7-internal/traffic-management#path_rules https://docs.cloud.google.com/load-balancing/docs/url-map-concepts
+Terraform registry
+Google Cloud documentation and Google Cloud Console
